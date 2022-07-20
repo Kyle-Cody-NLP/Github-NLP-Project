@@ -103,8 +103,7 @@ from env import github_token, github_username
 # TODO: Add more repositories to the `REPOS` list below.
 
 REPOS = [repo[1:] for repo in list(pd.read_csv('final_repos.csv').endpoints.values)]
-for repo in REPOS:
-    print(repo)
+
 
 headers = {"Authorization": f"token {github_token}", "User-Agent": github_username}
 
@@ -188,5 +187,6 @@ def scrape_github_data() -> List[Dict[str, str]]:
 
 
 if __name__ == "__main__":
-    data = scrape_github_data()
-    json.dump(data, open("data.json", "w"), indent=1)
+    #data = scrape_github_data()
+    #json.dump(data, open("data.json", "w"), indent=1)
+    print('howdy')
