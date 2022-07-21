@@ -4,7 +4,6 @@ import re
 import json
 import os
 
-
 # nltk: natural language toolkit -> tokenization, stopwords
 import nltk
 from nltk.tokenize.toktok import ToktokTokenizer
@@ -104,9 +103,8 @@ def create_final_csv():
 
         return data
 
-
-
 if __name__ == '__main__':
     data = create_final_csv()
     print(data)
     print(data.size)
+

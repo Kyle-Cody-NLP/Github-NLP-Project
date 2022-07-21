@@ -9,12 +9,12 @@ import numpy as np
 
 
 
-def create_urls(num=500):
+def create_urls(num=5000):
     num_of_repos=num
 
-    page_numbers = [int((i/10)+1) for i in range(0,num_of_repos,10)]
+    page_numbers = [int((i/100)+1) for i in range(0,num_of_repos,100)]
     print(page_numbers)
-    urls = [f'https://github.com/search?p={i}&q=cryptography&type=Repositories' for i in page_numbers]
+    urls = [f'https://github.com/search?p={i}&q=cryptography&type=Repositories&per_page=100' for i in page_numbers]
 
     print(urls)
     return urls
@@ -62,6 +62,8 @@ def make_all_endpoints():
 def acquire_endpoints():
     our_endpoints = pd.Series(make_all_endpoints(), name='endpoints')
     our_endpoints.to_csv('endpoints.csv', index=False)
+
+    return our_endpoints
 
 def flatten_endpoints():
     end_points = pd.read_csv('endpoints.csv')
@@ -179,6 +181,7 @@ def process_repo(repo: str) -> Dict[str, str]:
     }
 
 
+
 def scrape_github_data() -> List[Dict[str, str]]:
     """
     Loop through all of the repos and process them. Returns the processed data.
@@ -187,6 +190,7 @@ def scrape_github_data() -> List[Dict[str, str]]:
 
 
 if __name__ == "__main__":
-    #data = scrape_github_data()
-    #json.dump(data, open("data.json", "w"), indent=1)
+    df = acquire_endpoints()
+    data = scrape_github_data()
+    json.dump(data, open("data.json", "w"), indent=1)
     print('howdy')
