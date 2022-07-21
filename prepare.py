@@ -51,9 +51,10 @@ def lemmatize(string):
 
 
 def remove_stopwords(string, extra_words = [], exclude_words = []):
+    additional_stopwords = ['github', 'http', 'code']
     nltk.download('wordnet')
     nltk.download('stopwords')
-    stopword_list = stopwords.words('english')
+    stopword_list = stopwords.words('english') + additional_stopwords
     stopword_list = set(stopword_list) - set(exclude_words)
     stopword_list = stopword_list.union(set(extra_words))
     words = string.split()
