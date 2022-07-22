@@ -94,6 +94,7 @@ def create_final_csv():
         data = data.assign(cleaned=data.readme_contents.apply(basic_clean))
         data = data.assign(without_stop_words=data.cleaned.apply(remove_stopwords))
         data = data.assign(tokenized=data.without_stop_words.apply(tokenize))\
+                .assign(cleaned= data.without_stop_words.apply(remove_stopwords))\
                 .assign(stem=data.without_stop_words.apply(stem))\
                 .assign(lemm=data.without_stop_words.apply(lemmatize))
 
