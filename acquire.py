@@ -10,6 +10,8 @@ import numpy as np
 
 
 def create_urls(num=5000):
+    ''' this function scrapes the cryptography repositories from github and returns a list of urls
+    '''
     num_of_repos=num
 
     page_numbers = [int((i/100)+1) for i in range(0,num_of_repos,100)]
@@ -21,6 +23,8 @@ def create_urls(num=5000):
 
 
 def get_endpoints(url):
+    ''' This function gets the endpoints from the list of above urls
+    '''
 
     headers = {"Authorization": f"token {github_token}", "User-Agent": github_username}
     
@@ -46,6 +50,8 @@ def get_endpoints(url):
 
 
 def make_all_endpoints():
+    ''' This function returns all of the endpoints
+    '''
     urls = create_urls()
     for url in urls:
         print(url)
@@ -60,12 +66,16 @@ def make_all_endpoints():
     return all_endpoints
 
 def acquire_endpoints():
+    ''' This function acquires all endpoints and writes them to a csv.
+    '''
     our_endpoints = pd.Series(make_all_endpoints(), name='endpoints')
     our_endpoints.to_csv('endpoints.csv', index=False)
 
     return our_endpoints
 
 def flatten_endpoints():
+    ''' This function flattens a 2d array into a 1d array
+    '''
     end_points = pd.read_csv('endpoints.csv')
     all_values = []
     for value in end_points.values:
@@ -116,6 +126,8 @@ if headers["Authorization"] == "token " or headers["User-Agent"] == "":
 
 
 def github_api_request(url: str) -> Union[List, Dict]:
+    ''' This function makes requests from github and raises an error code if a specific error code is received.
+    '''
     response = requests.get(url, headers=headers)
     response_data = response.json()
     if response.status_code != 200:
@@ -127,6 +139,8 @@ def github_api_request(url: str) -> Union[List, Dict]:
 
 
 def get_repo_language(repo: str) -> str:
+    ''' This function fetches the language associated with a repository
+    '''
     url = f"https://api.github.com/repos/{repo}"
     repo_info = github_api_request(url)
     if type(repo_info) is dict:
@@ -142,6 +156,8 @@ def get_repo_language(repo: str) -> str:
 
 
 def get_repo_contents(repo: str) -> List[Dict[str, str]]:
+    ''' This function fetches the contents associated with a repo
+    '''
     url = f"https://api.github.com/repos/{repo}/contents/"
     contents = github_api_request(url)
     if type(contents) is list:
@@ -190,6 +206,8 @@ def scrape_github_data() -> List[Dict[str, str]]:
 
 
 if __name__ == "__main__":
+    ''' This says howdy if everything is acquired correctly. 
+    '''
     df = acquire_endpoints()
     data = scrape_github_data()
     json.dump(data, open("data.json", "w"), indent=1)
