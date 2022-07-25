@@ -10,7 +10,7 @@
 - The top 10 words account for 5% of the words found in README files. 
 - Most common words that are related to cryptography:
   - key , cryptography, crypto, hash 
-- Our K Nearest neighbor model beat baseline with an  test sample accuracy of 48.78%, which is a 170% increase in accuracy when compared to baseline. 
+- Our K Nearest Neighbor model beat baseline with a test sample accuracy of 52.44%, which is a 192% increase in accuracy when compared to baseline. 
 
 ## Deliverables: 
 - Final notebook with research process, well-labeled visualizations, models, and findings
@@ -45,7 +45,7 @@
   - key, use/using, build, cryptography, test, crypto, library, hash, function, io
 - The top 10 words account for 5% of the words found in README files. 
 - key , cryptography, crypto, and hash were the most frequently used words that are related with Cryptography
-- Our K Nearest neighbor model beat baseline with an  test sample accuracy of 48.78%, which is a 170% increase in accuracy when compared to baseline. 
+- Our K Nearest Neighbor model beat baseline with a test sample accuracy of 52.44%, which is a 192% increase in accuracy when compared to baseline. 
 
 ## With More Time:
 - Gather more README files to expand the dataset. 
