@@ -3,6 +3,14 @@
 ## [Final Presentation](https://docs.google.com/presentation/d/18Wb5EudIDU5466MhY4ZSC0h1SIAOMYk88jk7FNETzL8/edit#slide=id.p)
 
 ## Executive Summary: 
+- The 3 most popular programming languages used when dealing with Cryptography were:
+  - Python, C++, Java
+- The most common words that were used across all the README files were:
+  - key, use/using, build, cryptography, test, crypto, library, hash, function, io
+- The top 10 words account for 5% of the words found in README files. 
+- Most common words that are related to cryptography:
+  - key , cryptography, crypto, hash 
+- Our K Nearest neighbor model beat baseline with an  test sample accuracy of 48.78%, which is a 170% increase in accuracy when compared to baseline. 
 
 ## Deliverables: 
 - Final notebook with research process, well-labeled visualizations, models, and findings
@@ -10,7 +18,7 @@
 - 5-6 minute presentation 
 
 ## Project Goals:
-- Identify elements fo a README contents in order to predict the Github repository's primary programming language. 
+- Identify elements of a README contents in order to predict the Github repository's primary programming language. 
 - Create a predictive model that can take in the text of a Github repository's README and determine that repository's primary language.
 
 ## Project Description:
@@ -23,16 +31,27 @@
   - Ensure to properly annotate, comment, and use markdowns.
   - Store functions used in a wrangle.py file for reproducability.
   - Visualize the data when applicable.
-- Create a decision trees.........................
+- Create a decision tree models, random forest models, and KNN models to predict the programming language given a README. 
 - Create 2-5 slides in Google Slides to suitable for a general audience.
 - Present 5-6 minutes to peers.
 
 
 ## Data Dictionary:
+<img src="images/cryptography_readme.png" width = 750>
 
 ## Conclusion: 
+- Python, C++, and Java were the three most popular programming languages used when dealing with Cryptography.
+- The most common words that were used across all the README files were:
+  - key, use/using, build, cryptography, test, crypto, library, hash, function, io
+- The top 10 words account for 5% of the words found in README files. 
+- key , cryptography, crypto, and hash were the most frequently used words that are related with Cryptography
+- Our K Nearest neighbor model beat baseline with an  test sample accuracy of 48.78%, which is a 170% increase in accuracy when compared to baseline. 
 
 ## With More Time:
+- Gather more README files to expand the dataset. 
+  - See if there has been a shift in most frequently used programming languages, or if Python has always been the most frequently used.
+  - See if the most frequently used words has changed over time
+- Adjust Random Forest paramaters to see if we can improve upon our model. 
 
 ## Replicate Project: 
 - Tools/Libraries:
