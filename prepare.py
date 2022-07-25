@@ -21,6 +21,9 @@ warnings.filterwarnings('ignore')
 
 
 def basic_clean(string):
+    ''' Receives a string of text, processes it & then returns its normalized version.
+    Normalization via standard NKFD unicode, fed into an asii encoder & decoded back into UTF-8.
+    '''
     string = string.lower()
     string = unicodedata.normalize('NFKD', string)\
     .encode('ascii', 'ignore')\
@@ -30,12 +33,16 @@ def basic_clean(string):
 
 
 def tokenize(string):
+    ''' This function takes in a string and returns the tokenized form
+    '''
     tokenizer = nltk.tokenize.ToktokTokenizer()
     string = (tokenizer.tokenize(string, return_str=True))
     return string
 
 
 def stem(string):
+    '''This function takes in a string and returns the stemmed form
+    '''
     ps = nltk.porter.PorterStemmer()
     stems = [ps.stem(word) for word in string.split()]
     string = ' '.join(stems)
@@ -44,6 +51,9 @@ def stem(string):
 
 
 def lemmatize(string):
+    ''' This function takes in a string and returns the lemmatized form
+    '''
+
     wnl = nltk.stem.WordNetLemmatizer()
     lemmas = [wnl.lemmatize(word) for word in string.split()]
     string = ' '.join(lemmas)
@@ -51,6 +61,8 @@ def lemmatize(string):
 
 
 def remove_stopwords(string, extra_words = [], exclude_words = []):
+    ''' This function takes in a string and removes stop words from it
+    '''
     additional_stopwords = ['github', 'http', 'code']
     nltk.download('wordnet')
     nltk.download('stopwords')
@@ -79,6 +91,9 @@ def split_github_data(df):
     return train, validate, test
 
 def create_final_csv():
+    ''' This function searches for a file named final_data.csv. If found, it returns the data. If not, it will 
+    open data.json, prepare it, create a file named final_data.csv, and then open the file. 
+    '''
     filename = 'final_data.csv'
 
     if os.path.isfile(filename):
@@ -106,6 +121,8 @@ def create_final_csv():
         return data
 
 if __name__ == '__main__':
+    ''' This function opens data from the create final csv function
+    '''
     data = create_final_csv()
     print(data)
     print(data.size)
