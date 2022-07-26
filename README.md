@@ -51,7 +51,6 @@
 - Gather more README files to expand the dataset. 
   - See if there has been a shift in most frequently used programming languages, or if Python has always been the most frequently used.
   - See if the most frequently used words has changed over time
-- Adjust Random Forest paramaters to see if we can improve upon our model. 
 
 ## Replicate Project: 
 - Tools/Libraries:
