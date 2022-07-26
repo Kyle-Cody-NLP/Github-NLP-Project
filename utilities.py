@@ -13,6 +13,8 @@ from sklearn.metrics import classification_report, accuracy_score
 
 
 def most_frequent_words(df):
+    ''' Returns a df of the top words for each programming language in the readme given
+    the original dataframe. '''
 
     lang_dict = {}
     languages = df.language.unique()
@@ -58,6 +60,7 @@ def most_frequent_words(df):
 
 
 def make_top_bigrams(df):
+    ''' returns a dataframe of the top bigrams that showed up across all of the languages.'''
     
     bigrams = list(nltk.ngrams(" ".join(df.lemm.astype(str)).split(), 2))
     bigrams = pd.Series(bigrams).value_counts().head(50)
@@ -72,6 +75,8 @@ def make_top_bigrams(df):
 
 
 def make_top_trigrams(df):
+    '''Returns a dataframe of the top trigrams across all languages given the original
+    dataframe.'''
     
     trigrams = list(nltk.ngrams(" ".join(df.lemm.astype(str)).split(), 3))
     trigrams = pd.Series(trigrams).value_counts().head(50)
@@ -98,6 +103,7 @@ def display_side_by_side(*args,titles=cycle([''])):
     display_html(html_str,raw=True)
 
 def plot_top_words(top_words):
+    '''Shows the count of the top 10 words across all languages.'''
     top_words.plot(kind='bar')
     plt.title('Top 10 Occurring Words', color='black')
     plt.tick_params(axis='x', labelrotation=45)
@@ -108,6 +114,8 @@ def plot_top_words(top_words):
 
 
 def make_language_dict(df):
+    '''makes a dictionary that contains a list of all words per programming language
+    given the original dataframe.'''
     lang_dict = {}
     for lang in df.language.unique():
         lang_dict[lang] = df.lemm[df.language == lang]
@@ -117,6 +125,9 @@ def make_language_dict(df):
 
 
 def loop_n_times_knn(train, validate, test, top=15):
+    '''loops through *top* times to model KNN with n neighbors, changing as the loop progresses.
+    Returns a dictionary of train and validate accuracies that can be graphed to show
+    how accuracy changes as n nearest neighbors changes.'''
     train_accuracies = {}
     validate_accuracies = {}
     
@@ -140,6 +151,8 @@ def loop_n_times_knn(train, validate, test, top=15):
     return train_accuracies, validate_accuracies
 
 def create_encoded_df(df):
+    '''Creates an encoded df from the original df, including bigrams and trigrams, that is 
+    compatible with modeling.'''
     tfidf = TfidfVectorizer(ngram_range=(1,3))
     tfidfs = tfidf.fit_transform(df.dropna().lemm.values)
 
@@ -151,7 +164,8 @@ def create_encoded_df(df):
     return encoded_df
 
 def train_val_test_knn(train,validate, test):
-
+    '''Takes train, validate and test splits and makes predictions on all, although
+    this only prints the train and test accuracies for presentation puproses.'''
     knn = KNeighborsClassifier(n_neighbors=11)
 
     x_train, y_train, x_validate, y_validate, x_test, y_test = md.xy_train_validate_test(train, validate, test, 'programming_language_99')
@@ -169,31 +183,11 @@ def train_val_test_knn(train,validate, test):
     print(f'Validate Accuracy: {round(accuracy_score(validate_actual, validate_prediction), 4) * 100}%')
 
 
-def loop_n_times_knn(train, validate, test, top=15):
-    train_accuracies = {}
-    validate_accuracies = {}
-    
-    for i in range(1,top):
-        knn = KNeighborsClassifier(n_neighbors=i)
-
-        x_train, y_train, x_validate, y_validate, x_test, y_test = md.xy_train_validate_test(train, validate, test, 'programming_language_99')
-        knn.fit(x_train, y_train)
-
-        train_actual = y_train
-        validate_actual = y_validate
-        test_actual = y_test
-
-        train_prediction = knn.predict(x_train)
-        validate_prediction = knn.predict(x_validate)
-        test_prediction = knn.predict(x_test)
-        
-        train_accuracies[i] = accuracy_score(train_actual, train_prediction)
-        validate_accuracies[i] = accuracy_score(validate_actual, validate_prediction)
-
-    return train_accuracies, validate_accuracies
-
 
 def create_results(train, validate, test):
+    '''Turns the train and validate accuracy dictionaries into a dataframe that can be
+    plotted more easily. Results is the combination of training and validate accuracy dataframes.
+    Returns the results'''
     train_acc, validate_acc = loop_n_times_knn(train, validate, test)
 
     train_acc_df= pd.DataFrame(data={'knn': train_acc.keys(), 'train_accuracy': train_acc.values()})
@@ -203,6 +197,8 @@ def create_results(train, validate, test):
     return results
 
 def plot_results(results):
+    '''Takes the results from the create_results() function to plot the performance of
+    knn models as n_neighbors changes.'''
     plt.plot(results.knn, results.train_accuracy, color='black')
     plt.plot(results.knn, results.validate_accuracy, color='green')
     plt.xlabel('n Nearest Neighbors', color='green')
